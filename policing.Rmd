@@ -9,12 +9,13 @@ output: html_document
 library(readr)
 library(tidyverse)
 library(sf)
-
+library(fs)
+library(ggplot2)
 pol <- read_rds(url("https://stacks.stanford.edu/file/druid:tr137st9964/tr137st9964_ct_hartford_2019_02_25.rds"))
 ```
 
 ```{r echo=FALSE}
-pol %>% group_by(subject_race) %>% count()
+temp <- pol %>% filter(subject_race == "asian/pacific islander")
 
 download.file(url = "https://stacks.stanford.edu/file/druid:tr137st9964/tr137st9964_ct_hartford_shapefiles_2019_02_25.tgz",
               destfile = "shapes.tgz")
@@ -25,7 +26,7 @@ shapes <- read_sf("ct_hartford_shapefiles/Hartford_Neighborhoods.shp")
 
 file_delete(c("shapes.tgz","ct_hartford_shapefiles/"))
 
-ggplot(data = shapes) + geom_sf() + geom_point(shapes = d, aes(x = lon, y = lat) + labs(title = "Neighborhoods of Hartford CT")
+ggplot(data = shapes) + geom_sf() + geom_point(data = temp, aes(x = lng, y = lat))
 ```
 
 
