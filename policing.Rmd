@@ -1,0 +1,19 @@
+---
+title: "Hartford-P"
+author: "Nicholas Dow"
+date: "March 28, 2019"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(tidyverse)
+
+pol <- read_rds(url("https://stacks.stanford.edu/file/druid:tr137st9964/tr137st9964_ct_hartford_2019_02_25.rds"))
+```
+
+```{r}
+pol %>% group_by(subject_race) %>% count()
+```
+
+
